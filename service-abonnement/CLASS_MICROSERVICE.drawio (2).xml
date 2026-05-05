@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="XoXSqossIr4yQ3b3d_Zg">
+    <mxGraphModel dx="3717" dy="1880" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2343" pageHeight="1969" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="estatutAbo" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatutAbonnement" vertex="1">
+          <mxGeometry height="199" width="215" x="449" y="1028" as="geometry" />
+        </mxCell>
+        <mxCell id="estatutAbo_v" parent="estatutAbo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="EN_ATTENTE&#xa;ACTIF&#xa;EXPIRE&#xa;SUSPENDU&#xa;ANNULATION_EN_COURS&#xa;ANNULE&#xa;ECHEC_REMBOURSEMENT" vertex="1">
+          <mxGeometry height="135" width="215" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="estatutAbo_l" parent="estatutAbo" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="215" y="183" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutRenou" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatutRenouvellement" vertex="1">
+          <mxGeometry height="116" width="150" x="1576" y="1686" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutRenou_v" parent="eStatutRenou" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="SUCCES&#xa;ECHOUE&#xa;EN_ATTENTE" vertex="1">
+          <mxGeometry height="52" width="150" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutRenou_l" parent="eStatutRenou" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="150" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="emodeRenou" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;TypeRenouvellement" vertex="1">
+          <mxGeometry height="126" width="165" x="1302" y="1673" as="geometry" />
+        </mxCell>
+        <mxCell id="emodeRenou_v" parent="emodeRenou" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="MANUEL&#xa;AUTOMATIQUE" vertex="1">
+          <mxGeometry height="62" width="165" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="emodeRenou_l" parent="emodeRenou" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="165" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="etypenotif" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;TypeNotification" vertex="1">
+          <mxGeometry height="344" width="230" x="2027" y="1457" as="geometry" />
+        </mxCell>
+        <mxCell id="etypenotif_v" parent="etypenotif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="CONFIRMATION_SOUSCRIPTION&#xa;ECHEC_SOUSCRIPTION&#xa;RAPPEL_EXPIRATION&#xa;RENOUVELLEMENT_EFFECTUE&#xa;RENOUVELLEMENT_ECHOUEE&#xa;ANNULATION_EFFECTUEE&#xa;ANNULATION_ECHOUEE&#xa;SUSPENSION_EFFECTUE&#xa;SUSPENSION_ECHOUEE&#xa;MODIFICATION_EFFECTUE&#xa;MODIFICATION_ECHOUEE&#xa;ANNULATION_ADMIN_EFFECTUE&#xa;ANNULATION_ADMIN_ECHOUEE&#xa;REUSSITE_REMBOURSEMENT&#xa;ECHEC_REMBOURSEMENT&#xa;DESACTIVATION_EFFECTUEE&#xa;DESACTIVATION_ECHOUEE" vertex="1">
+          <mxGeometry height="280" width="230" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="etypenotif_l" parent="etypenotif" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="230" y="328" as="geometry" />
+        </mxCell>
+        <mxCell id="emoyen" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;MoyenTransport" vertex="1">
+          <mxGeometry height="133" width="195" x="704" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="emoyen_v" parent="emoyen" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="BUS&#xa;METRO&#xa;TRAMWAY&#xa;TRAIN" vertex="1">
+          <mxGeometry height="69" width="195" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="emoyen_l" parent="emoyen" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="195" y="117" as="geometry" />
+        </mxCell>
+        <mxCell id="etypeabo" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;CategorieAbonnement" vertex="1">
+          <mxGeometry height="106" width="160" x="1154" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="etypeabo_v" parent="etypeabo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="NORMAL&#xa;ETUDIANT" vertex="1">
+          <mxGeometry height="42" width="160" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="etypeabo_l" parent="etypeabo" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="160" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="eDuree" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;DureeOffre" vertex="1">
+          <mxGeometry height="136" width="210" x="1394" y="318" as="geometry" />
+        </mxCell>
+        <mxCell id="eDuree_v" parent="eDuree" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="HEBDOMADAIRE&#xa;MENSUEL&#xa;TRIMESTRIEL&#xa;ANNUEL" vertex="1">
+          <mxGeometry height="72" width="210" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="eDuree_l" parent="eDuree" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="210" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutOffre" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatutOffre" vertex="1">
+          <mxGeometry height="127" width="195" x="859" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutOffre_v" parent="eStatutOffre" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="ACTIF&#xa;DESACTIVE&#xa;SUPPRIME" vertex="1">
+          <mxGeometry height="63" width="195" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="eStatutOffre_l" parent="eStatutOffre" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="195" y="111" as="geometry" />
+        </mxCell>
+        <mxCell id="plan" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="PlanAbonnement" vertex="1">
+          <mxGeometry height="330" width="230" x="1014" y="338" as="geometry" />
+        </mxCell>
+        <mxCell id="plan_a" parent="plan" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- idPlan : Long&#xa;- nomPlan : String&#xa;- description : String&#xa;- categorie : CategorieAbonnement&#xa;- prix : Double&#xa;- duree : DureeOffre&#xa;- max_desactivation : int&#xa;- min_jours_entre_desactivation : int&#xa;- max_periode_desactivation : int&#xa;- est_actif : StatutOffre&#xa;- updated_At : Date&#xa;- created_At : Date" vertex="1">
+          <mxGeometry height="210" width="230" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="plan_l" parent="plan" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="230" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="plan_m" parent="plan" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ activer() : void&#xa;+ desactiver() : void&#xa;+ modifier() : void&#xa;+ supprimer() : void&#xa;" vertex="1">
+          <mxGeometry height="82" width="230" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="abo" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=13;" value="Abonnement" vertex="1">
+          <mxGeometry height="388" width="270" x="764" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="abo_a" parent="abo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- id : Long&#xa;- user_id : Long&#xa;- date_debut : Date&#xa;- date_fin : Date&#xa;- date_annulation : Date&#xa;- date_demande_annulation : Date&#xa;- date_derniere_tentative_remb : Date&#xa;- nb_tentatives_remb : int&#xa;- remboursement_id : Long&#xa;- renouvellement_auto : boolean&#xa;- prix_paye : Double&#xa;- statut : StatutAbonnement&#xa;- updated_At : Date&#xa;- created_At : Date" vertex="1">
+          <mxGeometry height="220" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="abo_l" parent="abo" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="270" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="abo_m" parent="abo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ suspendre(motif) : void&#xa;+ annuler(motif) : void&#xa;+ demanderAnnulation() : void&#xa;+ estActif() : boolean&#xa;+ estExpire() : boolean&#xa;+ getDureeRestante() : int&#xa;+ calculerRemboursement() : Double" vertex="1">
+          <mxGeometry height="130" width="270" y="258" as="geometry" />
+        </mxCell>
+        <mxCell id="desact" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="Desactivation" vertex="1">
+          <mxGeometry height="130" width="240" x="1183" y="983" as="geometry" />
+        </mxCell>
+        <mxCell id="desact_a" parent="desact" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- id : Long&#xa;- id_abonnement : Long&#xa;- date_debut_desactivation : Date&#xa;- date_fin_desactivation : Date&#xa;- created_At : Date" vertex="1">
+          <mxGeometry height="100" width="240" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="renou" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="Renouvellement" vertex="1">
+          <mxGeometry height="232" width="260" x="1416" y="1384" as="geometry" />
+        </mxCell>
+        <mxCell id="renou_a" parent="renou" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- id : Long&#xa;- id_abonnement : Long&#xa;- paiement_id : Long&#xa;- date_renouvellement : Date&#xa;- type_renouvellement : TypeRenouvellement&#xa;- statut : StatutRenouvellement&#xa;- prix_applique : Double&#xa;- updated_At : Date&#xa;- created_At : Date" vertex="1">
+          <mxGeometry height="140" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="renou_l" parent="renou" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="renou_m" parent="renou" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ confirmer() : void&#xa;+ annuler() : void&#xa;+ verifierPaiement() : boolean" vertex="1">
+          <mxGeometry height="54" width="260" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="paiement_local" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="Paiement" vertex="1">
+          <mxGeometry height="225" width="255" x="644" y="1435.5" as="geometry" />
+        </mxCell>
+        <mxCell id="paiement_local_a" parent="paiement_local" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- id : Long&#xa;- id_abonnement : Long&#xa;- montant : Double&#xa;- statut : StatutPaiement&#xa;- paiement_ref : String&#xa;- date_transaction : Date&#xa;- date_remboursement : Date&#xa;- motif_refus : String" vertex="1">
+          <mxGeometry height="130" width="255" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="paiement_local_l" parent="paiement_local" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="255" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="paiement_local_m" parent="paiement_local" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ initier() : void&#xa;+ confirmer() : void&#xa;+ rembourser() : boolean" vertex="1">
+          <mxGeometry height="57" width="255" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="estatutp" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatutPaiement" vertex="1">
+          <mxGeometry height="136" width="195" x="374" y="1480" as="geometry" />
+        </mxCell>
+        <mxCell id="estatutp_v" parent="estatutp" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="EN_ATTENTE&#xa;PAYE&#xa;REFUSE&#xa;REMBOURSE" vertex="1">
+          <mxGeometry height="72" width="195" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="estatutp_l" parent="estatutp" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="195" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="userDTO" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="UserDTO" vertex="1">
+          <mxGeometry height="150" width="230" x="77.5" y="1065" as="geometry" />
+        </mxCell>
+        <mxCell id="userDTO_a" parent="userDTO" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- id : Long&#xa;- nom : String&#xa;- prenom : String&#xa;- email : String&#xa;- role : Role&#xa;- estActif : boolean&#xa;- estEligible : boolean" vertex="1">
+          <mxGeometry height="120" width="230" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aboSvc" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=45;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#A680B8;fillColor=#E1D5E7;fontSize=13;" value="&lt;&lt;service&gt;&gt;&#xa;AbonnementService" vertex="1">
+          <mxGeometry height="209" width="300" x="1734" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="aboSvc_l" parent="aboSvc" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" vertex="1">
+          <mxGeometry height="8" width="300" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="aboSvc_m" parent="aboSvc" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ souscrire(userId, planId, offreId) : Abonnement&#xa;+ renouveler(abonnementId) : Abonnement&#xa;+ suspendre(abonnementId, motif) : void&#xa;+ resilier(abonnementId, motif) : void&#xa;+ annuler(abonnementId, motif) : void&#xa;+ forcerRenouvellement(id) : void&#xa;+ getActif(userId) : Abonnement&#xa;+ verifierRole(userId, role) : boolean&#xa;+ forcerAnnulation(id, motif) : void  " vertex="1">
+          <mxGeometry height="156" width="300" y="53" as="geometry" />
+        </mxCell>
+        <mxCell id="notifC" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="NotificationClient" vertex="1">
+          <mxGeometry height="342" width="340" x="1808" y="1004" as="geometry" />
+        </mxCell>
+        <mxCell id="notifC_a" parent="notifC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- baseUrl : String&#xa;- timeout : int" vertex="1">
+          <mxGeometry height="41" width="340" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="notifC_l" parent="notifC" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="340" y="71" as="geometry" />
+        </mxCell>
+        <mxCell id="notifC_m" parent="notifC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ envoyerConfirmationSouscription(abo) : void&#xa;+ envoyerEchecSouscription(userId, motif) : void&#xa;+ envoyerRappelExpiration(abo) : void&#xa;+ envoyerRenouvellementEffectue(abo) : void&#xa;+ envoyerEchecRenouvellement(abo, motif) : void&#xa;+ envoyerAnnulationEffectuee(abo) : void&#xa;+ envoyerEchecAnnulation(abo, motif) : void&#xa;+ envoyerSuspensionEffectuee(abo) : void&#xa;+ envoyerEchecSuspension(abo, motif) : void&#xa;+ envoyerModificationEffectuee(abo) : void&#xa;+ envoyerEchecModification(abo, motif) : void&#xa;+ envoyerAnnulationAdminEffectuee(abo, adminId) : void&#xa;+ envoyerEchecAnnulationAdmin(abo, motif) : void&#xa;+ envoyerReussiteRemboursement(abo, montant) : void&#xa;+ envoyerEchecRemboursement(abo, motif) : void" vertex="1">
+          <mxGeometry height="263" width="340" y="79" as="geometry" />
+        </mxCell>
+        <mxCell id="paiC" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="PaiementClient" vertex="1">
+          <mxGeometry height="130" width="270" x="1054" y="1468" as="geometry" />
+        </mxCell>
+        <mxCell id="paiC_a" parent="paiC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- baseUrl : String&#xa;- timeout : int" vertex="1">
+          <mxGeometry height="30" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="paiC_l" parent="paiC" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="paiC_m" parent="paiC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ initierPaiement(montant) : PaymentResponse&#xa;+ verifierPaiement(idTransaction) : boolean&#xa;+ rembourser(idTransaction) : boolean" vertex="1">
+          <mxGeometry height="62" width="270" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="userC" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" value="UtilisateurServiceClient" vertex="1">
+          <mxGeometry height="140" width="255" x="484" y="648" as="geometry" />
+        </mxCell>
+        <mxCell id="userC_a" parent="userC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="- baseUrl : String&#xa;- timeout : int" vertex="1">
+          <mxGeometry height="40" width="255" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="userC_l" parent="userC" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="8" width="255" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="userC_m" parent="userC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ getUserById(id) : UserDTO&#xa;+ verifierCompteActif(id) : boolean&#xa;+ verifierEligibilite(id) : boolean" vertex="1">
+          <mxGeometry height="62" width="255" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="extNotif" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;fontSize=13;" value="&lt;&lt;external service&gt;&gt;&#xa;Notification" vertex="1">
+          <mxGeometry height="86" width="220" x="1734" y="1454" as="geometry" />
+        </mxCell>
+        <mxCell id="extNotif_m" parent="extNotif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ envoyer(notification) : boolean" vertex="1">
+          <mxGeometry height="30" width="220" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="extNotif_l" parent="extNotif" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="220" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="extPai" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;fontSize=13;" value="&lt;&lt;external service&gt;&gt;&#xa;Paiement" vertex="1">
+          <mxGeometry height="116" width="240" x="878" y="1722" as="geometry" />
+        </mxCell>
+        <mxCell id="extPai_m" parent="extPai" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ payer(montant) : PaymentResponse&#xa;+ verifier(transactionId) : boolean&#xa;+ rembourser(transactionId) : boolean" vertex="1">
+          <mxGeometry height="60" width="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="extPai_l" parent="extPai" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="240" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="extUser" parent="1" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;fontSize=13;" value="&lt;&lt;external service&gt;&gt;&#xa;Utilisateur" vertex="1">
+          <mxGeometry height="126" width="277" x="54" y="778" as="geometry" />
+        </mxCell>
+        <mxCell id="extUser_m" parent="extUser" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="+ getUserById(id) : UserDTO&#xa;+ verifierCompteActif(id) : boolean&#xa;+ verifierEligibilite(id) : boolean" vertex="1">
+          <mxGeometry height="70" width="277" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="extUser_l" parent="extUser" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="16" width="277" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r_plan_abo" edge="1" parent="1" source="plan_m" style="endArrow=none;html=1;rounded=0;endFill=0;fontSize=13;" target="abo" value="correspond">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_plan_abo_s" connectable="0" parent="r_plan_abo" style="edgeLabel;fontSize=13;" value="1..N" vertex="1">
+          <mxGeometry relative="1" x="0.6" as="geometry">
+            <mxPoint x="-15" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_plan_abo_t" connectable="0" parent="r_plan_abo" style="edgeLabel;fontSize=13;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.6" as="geometry">
+            <mxPoint x="-5" y="-26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_abo_renou" edge="1" parent="1" source="abo_m" style="endArrow=none;html=1;rounded=0;startArrow=diamondThin;startFill=1;startSize=12;endFill=0;fontSize=13;" target="renou" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_renou_s" connectable="0" parent="r_abo_renou" style="edgeLabel;fontSize=13;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_renou_t" connectable="0" parent="r_abo_renou" style="edgeLabel;fontSize=13;" value="0..N" vertex="1">
+          <mxGeometry relative="1" x="0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_desact" edge="1" parent="1" source="abo" style="endArrow=none;html=1;rounded=0;startArrow=diamondThin;startFill=1;startSize=12;endFill=0;fontSize=13;" target="desact" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_desact_s" connectable="0" parent="r_abo_desact" style="edgeLabel;fontSize=13;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_desact_t" connectable="0" parent="r_abo_desact" style="edgeLabel;fontSize=13;" value="0..N" vertex="1">
+          <mxGeometry relative="1" x="0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_pailocal" edge="1" parent="1" source="abo" style="endArrow=none;html=1;rounded=0;startArrow=diamondThin;startFill=1;startSize=12;endFill=0;fontSize=13;" target="paiement_local" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_pailocal_s" connectable="0" parent="r_abo_pailocal" style="edgeLabel;fontSize=13;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_pailocal_t" connectable="0" parent="r_abo_pailocal" style="edgeLabel;fontSize=13;" value="0..*" vertex="1">
+          <mxGeometry relative="1" x="0.7" as="geometry" />
+        </mxCell>
+        <mxCell id="r_svc_abo" edge="1" parent="1" source="aboSvc_m" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="abo_a" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_svc_plan" edge="1" parent="1" source="aboSvc_m" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="plan_a" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_svc_renou" edge="1" parent="1" source="aboSvc_m" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="renou" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_notifC_ext" edge="1" parent="1" source="notifC" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="extNotif" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_svc_notifC" edge="1" parent="1" source="aboSvc_m" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="notifC" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_paiC_ext" edge="1" parent="1" source="paiC" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="extPai" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_renou_paiC" edge="1" parent="1" source="renou" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="paiC" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_pailocal_paiC" edge="1" parent="1" source="paiement_local" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="paiC" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_userC_ext" edge="1" parent="1" source="userC" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="extUser" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_abo_userC" edge="1" parent="1" source="aboSvc" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#b85450;fontSize=13;" target="userC" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_userC_dto" edge="1" parent="1" source="userC" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#d6b656;fontSize=13;" target="userDTO" value="&lt;font style=&quot;color: rgb(169, 196, 235);&quot;&gt;retourne&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_extUser_dto" edge="1" parent="1" source="extUser" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;fontColor=#d6b656;fontSize=13;" target="userDTO" value="&lt;font style=&quot;color: rgb(169, 196, 235);&quot;&gt;retourne&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_typenotif_notifC" edge="1" parent="1" source="etypenotif" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="notifC" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_statutabo_abo" edge="1" parent="1" source="abo" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="estatutAbo" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_moyen_offre" edge="1" parent="1" source="plan" style="endArrow=none;dashed=1;html=1;rounded=0;entryPerimeter=0;fontSize=13;" target="emoyen_v" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="749" y="504.52631578947376" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_statutoffre_plan" edge="1" parent="1" source="plan" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="eStatutOffre" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_cat_plan" edge="1" parent="1" source="plan" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="etypeabo" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="303" y="506" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_duree_plan" edge="1" parent="1" source="plan" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="eDuree" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_moderenou_renou" edge="1" parent="1" source="renou" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="emodeRenou" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_statutrenou_renou" edge="1" parent="1" source="renou" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="eStatutRenou" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_statutpai_pailocal" edge="1" parent="1" source="paiement_local" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="estatutp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DpGD5WGNvkvwXSDuY5FB-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#FFD966;fillColor=#FFF2CC;fontSize=13;" value="&lt;&lt;enumeration&gt;&gt;&#xa;Role" vertex="1">
+          <mxGeometry height="120" width="195" x="95" y="1302" as="geometry" />
+        </mxCell>
+        <mxCell id="DpGD5WGNvkvwXSDuY5FB-2" parent="DpGD5WGNvkvwXSDuY5FB-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" value="UTILISATEUR&#xa;SUPERVISEUR_ABONNEMENT" vertex="1">
+          <mxGeometry height="62" width="195" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="DpGD5WGNvkvwXSDuY5FB-3" parent="DpGD5WGNvkvwXSDuY5FB-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="10" width="195" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="DpGD5WGNvkvwXSDuY5FB-4" edge="1" parent="1" source="DpGD5WGNvkvwXSDuY5FB-1" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=13;" target="userDTO" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="674" y="1238" as="sourcePoint" />
+            <mxPoint x="724" y="1188" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
