@@ -1,0 +1,97 @@
+@startuml Microservices_Architecture
+!theme plain
+title Architecture Microservices SGITU - Diagramme de Composants
+
+package "PRESENTATION LAYER" {
+    component [Web Browser] as WEB
+    component [Mobile App] as MOBILE
+    component [Admin Portal] as ADMIN
+}
+
+package "GATEWAY LAYER" {
+    component [API Gateway] as GATEWAY <<HTTP Routes>>
+}
+
+package "CORE MICROSERVICES" {
+    component [Service-Utilisateur\n(Port 8081)] as SU <<Microservice>>
+    component [Service-Abonnement\n(Port 8082)] as SA <<Microservice>>
+    component [Service-Paiement\n(Port 8083)] as SP <<Microservice>>
+}
+
+package "SUPPORT MICROSERVICES" {
+    component [Service-Billetterie] as SB <<Microservice>>
+    component [Service-Notification] as SN <<Microservice>>
+    component [Service-Coordination] as SC <<Microservice>>
+    component [Service-Suivi-Véhicule] as SV <<Microservice>>
+    component [Service-Incidents] as SI <<Microservice>>
+    component [Service-Analytique\n(Port 8087)] as SANA <<Microservice>>
+}
+
+package "DATA PERSISTENCE" {
+    database [MySQL DB\n(Utilisateurs)] as MYSQL_U
+    database [MySQL DB\n(Abonnements)] as MYSQL_AB
+    database [MySQL DB\n(Paiements)] as MYSQL_P
+    database [MySQL DB\n(Analytics)] as MYSQL_AN
+}
+
+package "MESSAGE BROKER" {
+    component [Apache Kafka] as KAFKA <<Async>>
+}
+
+package "INFRASTRUCTURE" {
+    component [Docker] as DOCKER <<Container>>
+    component [Service Registry] as REGISTRY <<Discovery>>
+    component [Monitoring] as MONITOR <<Metrics>>
+}
+
+' Presentation to Gateway
+WEB --> GATEWAY : HTTP
+MOBILE --> GATEWAY : HTTP
+ADMIN --> GATEWAY : HTTP
+
+' Gateway to Services
+GATEWAY --> SU : /users
+GATEWAY --> SA : /abonnements
+GATEWAY --> SP : /payments
+GATEWAY --> SB : /billets
+GATEWAY --> SN : /notifications
+GATEWAY --> SC : /coordination
+GATEWAY --> SV : /tracking
+GATEWAY --> SI : /incidents
+GATEWAY --> SANA : /analytics
+
+' Service to Database
+SU --> MYSQL_U : CRUD
+SA --> MYSQL_AB : CRUD
+SP --> MYSQL_P : CRUD
+SANA --> MYSQL_AN : CRUD
+
+' REST/Feign Communication (Synchronous)
+SA --> SU : Feign\ngetUserById()
+SA --> SP : Feign\ninitierPaiement()
+SA --> SANA : Feign\nsendEvents()
+SB --> SU : Feign\ngetUserById()
+
+' Kafka Communication (Asynchronous)
+SU ->> KAFKA : publish user.*
+SA ->> KAFKA : publish abonnement.*
+SP ->> KAFKA : publish paiement.*
+SI ->> KAFKA : publish incident.*
+
+KAFKA ->> SN : subscribe
+KAFKA ->> SANA : subscribe
+
+' Infrastructure
+SU .-> DOCKER : runs on
+SA .-> DOCKER : runs on
+SP .-> DOCKER : runs on
+
+SU .-> REGISTRY : register
+SA .-> REGISTRY : register
+SP .-> REGISTRY : register
+
+SU .-> MONITOR : metrics
+SA .-> MONITOR : metrics
+SP .-> MONITOR : metrics
+
+@enduml

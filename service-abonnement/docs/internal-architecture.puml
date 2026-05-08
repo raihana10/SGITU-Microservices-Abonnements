@@ -1,0 +1,95 @@
+@startuml Service_Abonnement_Internal
+!theme plain
+title Service-Abonnement - Architecture Interne (Couches)
+
+package "REST API LAYER (Controllers)" {
+    component [AbonnementController] as AC <<REST>>
+    component [PlanAbonnementController] as PC <<REST>>
+    component [AdminAbonnementController] as AAC <<REST>>
+}
+
+package "BUSINESS LOGIC LAYER (Services)" {
+    component [AbonnementService] as AS <<Service>>
+    component [PlanAbonnementService] as PAS <<Service>>
+    component [AnalytiqueScheduler] as ANA_S <<Service>>
+}
+
+package "INTEGRATION LAYER (Feign Clients)" {
+    component [UtilisateurServiceClient] as USE <<FeignClient>>
+    component [PaiementClient] as PAY <<FeignClient>>
+    component [AnalyseClient] as ANA_C <<FeignClient>>
+}
+
+package "EVENT PRODUCER LAYER" {
+    component [SubscriptionEventPublisher] as PUB <<Producer>>
+}
+
+package "DATA ACCESS LAYER (Repositories)" {
+    component [AbonnementRepository] as ABR <<JPA>>
+    component [PlanAbonnementRepository] as PAR_R <<JPA>>
+    component [RenouvellementRepository] as RER <<JPA>>
+    component [PaiementRepository] as PAR <<JPA>>
+    component [DesactivationRepository] as DAR <<JPA>>
+    component [AnalytiqueTraceRepository] as ATR <<JPA>>
+}
+
+package "CONFIGURATION & SECURITY" {
+    component [JwtUtils] as JWT <<Security>>
+    component [JwtAuthenticationFilter] as FILTER <<Filter>>
+    component [FeignConfig] as FEIGN_CONF <<Config>>
+    component [SecurityConfig] as SEC <<Config>>
+    component [OpenApiConfig] as OA <<Config>>
+}
+
+package "EXTERNAL DEPENDENCIES" {
+    database [MySQL Database\n(Abonnements)] as DB_AB
+    component [Service-Utilisateur] as EXT_U <<External>>
+    component [Service-Paiement] as EXT_P <<External>>
+    component [Service-Analyse] as EXT_A <<External>>
+    component [Kafka Broker] as KB <<MessageBroker>>
+}
+
+' Request Flow
+AC --> AS : call()
+PC --> PAS : call()
+AAC --> AS : call()
+
+' Service to Repositories
+AS --> ABR : CRUD
+AS --> RER : CRUD
+AS --> PAR : CRUD
+AS --> ATR : write()
+PAS --> PAR_R : CRUD
+
+' Repository to Database
+ABR --> DB_AB : SQL
+PAR_R --> DB_AB : SQL
+RER --> DB_AB : SQL
+PAR --> DB_AB : SQL
+DAR --> DB_AB : SQL
+ATR --> DB_AB : SQL
+
+' Service to External Clients
+AS --> USE : call()
+AS --> PAY : call()
+AS --> ANA_C : call()
+
+' External Clients to External Services
+USE --> EXT_U : HTTP GET
+PAY --> EXT_P : HTTP POST
+ANA_C --> EXT_A : HTTP POST
+
+' Event Publishing
+AS --> PUB : publishEvent()
+PAS --> PUB : publishEvent()
+PUB --> KB : publish()
+
+' Configuration & Security
+FILTER .-> AC : intercept
+JWT .-> FILTER : validate
+FEIGN_CONF .-> USE : config
+FEIGN_CONF .-> PAY : config
+FEIGN_CONF .-> ANA_C : config
+SEC .-> AC : secure
+
+@enduml

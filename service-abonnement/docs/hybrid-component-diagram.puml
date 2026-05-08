@@ -1,0 +1,222 @@
+@startuml Service_Abonnement_Hybrid
+!theme plain
+title Service-Abonnement: Architecture Hybride (Interne + Interactions)
+
+' ============================================
+' ACTEURS EXTERNES
+' ============================================
+actor "👤 Abonné" as ABONNE
+actor "👨‍💼 Superviseur" as SUPERVISOR
+actor "🔧 Admin" as ADMIN
+
+' ============================================
+' POINT D'ENTRÉE: API GATEWAY
+' ============================================
+package "🔗 ENTRÉE SYSTÈME" {
+    component [API Gateway\n(G10)\n/abonnements routing] as GATEWAY <<external_service>>
+}
+
+' ============================================
+' SERVICE-ABONNEMENT: VUE HYBRIDE
+' ============================================
+package "G2: Service-Abonnement (8082)" {
+    
+    ' ========== LAYER 1: REST CONTROLLERS ==========
+    package "LAYER 1: REST Controllers" {
+        component [AbonnementController\n✓ POST /souscrire\n✓ GET /abonnements\n✓ DELETE /annuler] as ABON_CTRL <<component>>
+        component [PlanAbonnementController\n✓ GET /plans\n✓ POST /plans\n✓ PUT /plans/{id}] as PLAN_CTRL <<component>>
+        component [AdminAbonnementController\n✓ Admin operations] as ADMIN_CTRL <<component>>
+    }
+    
+    ' ========== LAYER 2: BUSINESS LOGIC ==========
+    package "LAYER 2: Business Logic (Services)" {
+        component [AbonnementService\n- souscrire()\n- renouveler()\n- annuler()\n- valider()] as ABON_SVC <<component>>
+        component [PlanAbonnementService\n- createPlan()\n- getPlan()\n- updatePlan()] as PLAN_SVC <<component>>
+        component [AnalytiqueScheduler\n- periodic tasks\n- cleanup\n- alerts] as SCHEDULER <<component>>
+    }
+    
+    ' ========== LAYER 3: INTEGRATION CLIENTS (Feign) ==========
+    package "LAYER 3: Integration Layer (Feign Clients)" {
+        component [UtilisateurServiceClient\n→ Service-Utilisateur\ngetUserById()\nvalidateUser()] as USER_CLIENT <<component>>
+        component [PaiementClient\n→ Service-Paiement\ninitierPaiement()\nverifierPaiement()\nrembourser()] as PAYMENT_CLIENT <<component>>
+        component [AnalyseClient\n→ Service-Analyse\nsendEvents()] as ANALYSE_CLIENT <<component>>
+        ' component [NotificationClient\n→ Service-Notification\nsendNotification()] as NOTIF_CLIENT <<component>>
+    }
+    
+    ' ========== LAYER 4: EVENT PRODUCER ==========
+    package "LAYER 4: Event Producer (Kafka)" {
+        component [SubscriptionEventPublisher\n- abonnement.souscription\n- abonnement.renouvellement\n- abonnement.annulation\n- abonnement.modification\n- abonnement.suspension\n- abonnement.desactivation\n- abonnement.rappel] as EVENT_PUB <<component>>
+    }
+    
+    ' ========== LAYER 5: DATA ACCESS ==========
+    package "LAYER 5: Data Access (JPA Repositories)" {
+        component [AbonnementRepository] as ABON_REPO <<component>>
+        component [PlanAbonnementRepository] as PLAN_REPO <<component>>
+        component [RenouvellementRepository] as RENEW_REPO <<component>>
+        component [PaiementRepository] as PAY_REPO <<component>>
+        component [DesactivationRepository] as DEACTIVATE_REPO <<component>>
+        component [AnalytiqueTraceRepository] as ANALYTICS_REPO <<component>>
+    }
+    
+    ' ========== LAYER 6: CONFIGURATION & SECURITY ==========
+    package "LAYER 6: Configuration & Security" {
+        component [JwtUtils + JwtAuthenticationFilter\n(Security)] as JWT_CONFIG <<component>>
+        component [FeignConfig\n(Client configuration)] as FEIGN_CONFIG <<component>>
+        component [SecurityConfig + OpenApiConfig] as SECURITY_CONFIG <<component>>
+    }
+}
+
+' ============================================
+' BASES DE DONNÉES LOCALES
+' ============================================
+package "💾 PERSISTENCE" {
+    database [MySQL Database\nabonnement_db\n\nTables:\n- abonnement\n- plan_abonnement\n- renouvellement\n- paiement\n- desactivation\n- analytique_trace] as MYSQL_ABON <<database>>
+}
+
+' ============================================
+' MESSAGE BROKER
+' ============================================
+package "📨 MESSAGING" {
+    component [Apache Kafka\n7 Topics:\n- abonnement.*\n- notifications\n- analytics] as KAFKA <<component>>
+}
+
+' ============================================
+' EXTERNAL MICROSERVICES
+' ============================================
+package "🔗 MICROSERVICES COLLABORATEURS" {
+    
+    component [Service-Utilisateur (8081)\n✓ getUserById()\n✓ validateUser()\n✓ getUserByEmail()] as SVC_USER <<external_service>>
+    
+    component [Service-Paiement (8083)\n✓ initierPaiement()\n✓ verifierPaiement()\n✓ rembourser()] as SVC_PAYMENT <<external_service>>
+    
+    component [Service-Analyse (8087)\n✓ sendEvents()\n✓ getAnalytics()\n✓ generateReports()] as SVC_ANALYSE <<external_service>>
+    
+    component [Service-Notification\n✓ sendEmail()\n✓ sendSMS()\n✓ sendPush()] as SVC_NOTIF <<external_service>>
+    
+    component [Service-Billetterie\n✓ bookTicket()\n✓ issueTicket()\n✓ validateTicket()] as SVC_BILLET <<external_service>>
+}
+
+' ============================================
+' FLUX INTERNES (Couches)
+' ============================================
+
+' Acteurs vers Controllers
+ABONNE --> GATEWAY : HTTP Requests
+SUPERVISOR --> GATEWAY : HTTP Requests
+ADMIN --> GATEWAY : HTTP Requests
+
+' Gateway vers Controllers
+GATEWAY --> ABON_CTRL : POST /souscrire\nGET /abonnements\nDELETE /annuler
+GATEWAY --> PLAN_CTRL : GET /plans\nPOST /plans
+GATEWAY --> ADMIN_CTRL : Admin operations
+
+' Controllers vers Services
+ABON_CTRL --> ABON_SVC : call()
+PLAN_CTRL --> PLAN_SVC : call()
+ADMIN_CTRL --> ABON_SVC : call()
+ADMIN_CTRL --> PLAN_SVC : call()
+
+' Services vers Repositories
+ABON_SVC --> ABON_REPO : query/update
+ABON_SVC --> RENEW_REPO : query/update
+ABON_SVC --> PAY_REPO : query/update
+ABON_SVC --> ANALYTICS_REPO : write
+PLAN_SVC --> PLAN_REPO : query/update
+SCHEDULER --> ABON_REPO : query
+SCHEDULER --> DEACTIVATE_REPO : write
+
+' Repositories vers Database
+ABON_REPO --> MYSQL_ABON : SQL
+PLAN_REPO --> MYSQL_ABON : SQL
+RENEW_REPO --> MYSQL_ABON : SQL
+PAY_REPO --> MYSQL_ABON : SQL
+DEACTIVATE_REPO --> MYSQL_ABON : SQL
+ANALYTICS_REPO --> MYSQL_ABON : SQL
+
+' Services vers Integration Clients (External Calls)
+ABON_SVC --> USER_CLIENT : validate user
+ABON_SVC --> PAYMENT_CLIENT : process payment
+ABON_SVC --> ANALYSE_CLIENT : send events
+
+' Integration Clients vers External Services (REST Calls)
+USER_CLIENT -.-> SVC_USER : Feign\nGET /users/{id}
+PAYMENT_CLIENT -.-> SVC_PAYMENT : Feign\nPOST /payments
+ANALYSE_CLIENT -.-> SVC_ANALYSE : Feign\nPOST /events
+
+' Services vers Event Publisher
+ABON_SVC --> EVENT_PUB : publishEvent()
+PLAN_SVC --> EVENT_PUB : publishEvent()
+SCHEDULER --> EVENT_PUB : publishEvent()
+
+' Event Publisher vers Kafka
+EVENT_PUB --> KAFKA : publish 7 topics
+
+' Kafka vers Consumers (External Services)
+KAFKA -..-> SVC_NOTIF : subscribe\n(notifications)
+KAFKA -..-> SVC_ANALYSE : subscribe\n(analytics)
+KAFKA -..-> SVC_BILLET : subscribe\n(events)
+
+' Configuration affects
+JWT_CONFIG -..- ABON_CTRL : secures
+JWT_CONFIG -..- PLAN_CTRL : secures
+JWT_CONFIG -..- ADMIN_CTRL : secures
+FEIGN_CONFIG -..- USER_CLIENT : configures
+FEIGN_CONFIG -..- PAYMENT_CLIENT : configures
+FEIGN_CONFIG -..- ANALYSE_CLIENT : configures
+
+' ============================================
+' STYLES
+' ============================================
+skinparam backgroundColor #ffffff
+skinparam componentBackgroundColor #e8f4f8
+skinparam componentBorderColor #0288d1
+skinparam packageBackgroundColor #f5f5f5
+skinparam packageBorderColor #424242
+
+' Controllers
+ABON_CTRL --> [style: 0xff9800]
+PLAN_CTRL --> [style: 0xff9800]
+ADMIN_CTRL --> [style: 0xff9800]
+
+' Services
+ABON_SVC --> [style: 0x4caf50]
+PLAN_SVC --> [style: 0x4caf50]
+SCHEDULER --> [style: 0x4caf50]
+
+' Integration
+USER_CLIENT --> [style: 0xf57c00]
+PAYMENT_CLIENT --> [style: 0xf57c00]
+ANALYSE_CLIENT --> [style: 0xf57c00]
+
+' Kafka
+EVENT_PUB --> [style: 0xe91e63]
+KAFKA --> [style: 0xc2185b]
+
+' External
+SVC_USER --> [style: 0x1976d2]
+SVC_PAYMENT --> [style: 0x1976d2]
+SVC_ANALYSE --> [style: 0x1976d2]
+SVC_NOTIF --> [style: 0x1976d2]
+SVC_BILLET --> [style: 0x1976d2]
+
+' Database
+MYSQL_ABON --> [style: 0x7b1fa2]
+
+' Gateway
+GATEWAY --> [style: 0xffa000]
+
+legend right
+    |<#FF9800> Controllers (REST Endpoints) |
+    |<#4CAF50> Services (Business Logic) |
+    |<#F57C00> Integration Clients (Feign) |
+    |<#E91E63> Event Publisher (Kafka) |
+    |<#1976D2> External Microservices |
+    |<#7B1FA2> Database (MySQL) |
+    |<#FFA000> API Gateway |
+    |
+    |— = Synchrone (REST/Feign) |
+    |-.. = Asynchrone (Kafka) |
+    |... = Configuration |
+endlegend
+
+@enduml
