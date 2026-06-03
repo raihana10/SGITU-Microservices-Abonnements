@@ -1,0 +1,12 @@
+# Allocates local persistent storage for the paiement MySQL database.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paiement-db-pvc
+  namespace: sgitu
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi
+

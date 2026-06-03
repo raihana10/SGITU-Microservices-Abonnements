@@ -1,0 +1,14 @@
+# Exposes the utilisateur PostgreSQL database inside the SGITU namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-utilisateur
+  namespace: sgitu
+spec:
+  type: ClusterIP
+  selector:
+    app: db-utilisateur
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres

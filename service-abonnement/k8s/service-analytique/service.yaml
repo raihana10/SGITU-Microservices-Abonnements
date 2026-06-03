@@ -1,0 +1,15 @@
+# Exposes the analytique service inside the SGITU namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-analytique
+  namespace: sgitu
+spec:
+  type: ClusterIP
+  selector:
+    app: service-analytique
+  ports:
+    - name: http-8088
+      port: 8088
+      targetPort: http-8088
+

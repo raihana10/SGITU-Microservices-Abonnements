@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-gateway
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-gateway
+  template:
+    metadata:
+      labels:
+        app: db-gateway
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: GATEWAY_DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: GATEWAY_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: GATEWAY_DB_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: GATEWAY_DB_ROOT_PASSWORD
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          readinessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: gateway-db-pvc

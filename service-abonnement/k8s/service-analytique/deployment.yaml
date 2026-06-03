@@ -1,0 +1,54 @@
+# Deploys the analytique Spring Boot microservice.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-analytique
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-analytique
+  template:
+    metadata:
+      labels:
+        app: service-analytique
+    spec:
+      initContainers:
+        - name: wait-for-mongodb
+          image: busybox:1.36
+          command: ["sh", "-c", "until nc -z mongodb 27017; do sleep 3; done"]
+      containers:
+        - name: service-analytique
+          image: sgitu/g8-analytics-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http-8088
+              containerPort: 8088
+          envFrom:
+            - configMapRef: {name: sgitu-config}
+            - secretRef: {name: sgitu-secrets}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+            - name: MONGO_URI
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: MONGO_URI}
+            - name: MONGO_DATABASE
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: MONGO_DATABASE}
+            - name: ML_SERVICE_URL
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: ML_SERVICE_URL}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: http-8088}
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 10
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: http-8088}
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          resources:
+            requests: {cpu: 250m, memory: 512Mi}
+            limits: {cpu: "1", memory: 1Gi}

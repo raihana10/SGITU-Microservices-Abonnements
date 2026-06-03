@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: api-gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://db-gateway:3306/gateway_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: GATEWAY_DB_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: GATEWAY_DB_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: JWT_SECRET
+            # Overriding service URIs to match K8s service names
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_G2_ABONNEMENTS_URI
+              value: http://service-abonnement:8082
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_G3_UTILISATEURS_URI
+              value: http://service-utilisateur:8083
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_G6_PAIEMENT_URI
+              value: http://service-paiement:8086
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_G8_ANALYTICS_URI
+              value: http://service-analytique:8088
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10

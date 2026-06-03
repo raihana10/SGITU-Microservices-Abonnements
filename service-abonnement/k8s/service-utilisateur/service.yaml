@@ -1,0 +1,15 @@
+# Exposes the utilisateur service inside the SGITU namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-utilisateur
+  namespace: sgitu
+spec:
+  type: ClusterIP
+  selector:
+    app: service-utilisateur
+  ports:
+    - name: http-8083
+      port: 8083
+      targetPort: http-8083
+

@@ -1,0 +1,13 @@
+# Allocates local persistent storage for the abonnement MySQL database.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: abonnement-db-pvc
+  namespace: sgitu
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+

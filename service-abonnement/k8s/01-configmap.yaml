@@ -1,0 +1,32 @@
+# Provides non-sensitive config for the abonnement test stack.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sgitu-config
+  namespace: sgitu
+data:
+  ABONNEMENT_SERVICE_URL: "http://service-abonnement.sgitu.svc.cluster.local:8082"
+  UTILISATEUR_SERVICE_URL: "http://service-utilisateur.sgitu.svc.cluster.local:8083"
+  PAIEMENT_SERVICE_URL: "http://service-paiement.sgitu.svc.cluster.local:8086"
+  ANALYTIQUE_SERVICE_URL: "http://service-analytique.sgitu.svc.cluster.local:8088"
+  G2_BASE_URL: "http://service-abonnement.sgitu.svc.cluster.local:8082"
+  G3_BASE_URL: "http://service-utilisateur.sgitu.svc.cluster.local:8083"
+  G6_BASE_URL: "http://service-paiement.sgitu.svc.cluster.local:8086"
+  G8_BASE_URL: "http://service-analytique.sgitu.svc.cluster.local:8088"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap.sgitu.svc.cluster.local:9092"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap.sgitu.svc.cluster.local:9092"
+  REDIS_HOST: "redis.sgitu.svc.cluster.local"
+  REDIS_PORT: "6379"
+  SPRING_REDIS_HOST: "redis.sgitu.svc.cluster.local"
+  SPRING_REDIS_PORT: "6379"
+  ABONNEMENT_DB_NAME: "abonnement_db"
+  PAIEMENT_DB_NAME: "payment_db"
+  UTILISATEUR_DB_NAME: "users_db"
+  abonnement_DB_NAME: "abonnement_db"
+  users_DB_NAME: "users_db"
+  MONGO_DATABASE: "g8_analytics"
+  MONGO_URI: "mongodb://mongodb.sgitu.svc.cluster.local:27017/g8_analytics"
+  ML_SERVICE_URL: "http://localhost:5000"
+  KAFKA_TOPIC_SUBSCRIPTION: "abonnement.souscription"
+  KAFKA_TOPIC_PAYMENT: "payment.transaction.completed"
+  GATEWAY_DB_NAME: "gateway_db"

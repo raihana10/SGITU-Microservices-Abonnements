@@ -1,0 +1,97 @@
+# Deploys the abonnement Spring Boot microservice.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-abonnement
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-abonnement
+  template:
+    metadata:
+      labels:
+        app: service-abonnement
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command: ["sh", "-c", "until nc -z db-abonnement 3306; do sleep 3; done"]
+      containers:
+        - name: service-abonnement
+          image: raihana10m/service-abonnement:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http-8082
+              containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: sgitu-config
+            - secretRef:
+                name: sgitu-secrets
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: ABONNEMENT_DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_PASSWORD
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://db-abonnement.sgitu.svc.cluster.local:3306/$(DB_NAME)?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_PASSWORD
+            - name: UTILISATEUR_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: UTILISATEUR_SERVICE_URL
+            - name: PAIEMENT_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: PAIEMENT_SERVICE_URL
+            - name: ANALYSE_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: ANALYTIQUE_SERVICE_URL
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http-8082
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http-8082
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi

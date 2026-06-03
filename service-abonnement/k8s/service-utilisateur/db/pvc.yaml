@@ -1,0 +1,11 @@
+# Allocates local persistent storage for the utilisateur PostgreSQL database.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: utilisateur-db-pvc
+  namespace: sgitu
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi

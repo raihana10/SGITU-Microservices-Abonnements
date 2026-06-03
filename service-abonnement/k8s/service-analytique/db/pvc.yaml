@@ -1,0 +1,11 @@
+# Allocates local persistent storage for the analytique MongoDB database.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: analytique-mongodb-pvc
+  namespace: sgitu
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi

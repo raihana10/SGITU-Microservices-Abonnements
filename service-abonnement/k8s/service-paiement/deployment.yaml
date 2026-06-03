@@ -1,0 +1,61 @@
+# Deploys the paiement Spring Boot microservice.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-paiement
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-paiement
+  template:
+    metadata:
+      labels:
+        app: service-paiement
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command: ["sh", "-c", "until nc -z db-paiement 3306; do sleep 3; done"]
+      containers:
+        - name: service-paiement
+          image: sgitu/payment-service:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http-8086
+              containerPort: 8086
+          envFrom:
+            - configMapRef: {name: sgitu-config}
+            - secretRef: {name: sgitu-secrets}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+            - name: SERVER_PORT
+              value: "8086"
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: PAIEMENT_DB_NAME}
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://db-paiement.sgitu.svc.cluster.local:3306/$(DB_NAME)?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef: {name: sgitu-secrets, key: PAIEMENT_DB_USER}
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: sgitu-secrets, key: PAIEMENT_DB_PASSWORD}
+            - name: SUBSCRIPTION_SERVICE_URL
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: ABONNEMENT_SERVICE_URL}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: http-8086}
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 10
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: http-8086}
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          resources:
+            requests: {cpu: 250m, memory: 512Mi}
+            limits: {cpu: "1", memory: 1Gi}

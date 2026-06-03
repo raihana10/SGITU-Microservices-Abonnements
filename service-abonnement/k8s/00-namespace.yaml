@@ -1,0 +1,6 @@
+# Creates the SGITU namespace for all local Minikube resources.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sgitu
+

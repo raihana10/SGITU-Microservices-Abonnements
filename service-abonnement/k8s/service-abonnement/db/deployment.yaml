@@ -1,0 +1,57 @@
+# Deploys the abonnement MySQL database for local Minikube.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-abonnement
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-abonnement
+  template:
+    metadata:
+      labels:
+        app: db-abonnement
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: sgitu-config
+                  key: ABONNEMENT_DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgitu-secrets
+                  key: ABONNEMENT_DB_ROOT_PASSWORD
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          readinessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: abonnement-db-pvc
+

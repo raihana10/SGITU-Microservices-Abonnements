@@ -1,0 +1,15 @@
+# Exposes the paiement service inside the SGITU namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-paiement
+  namespace: sgitu
+spec:
+  type: ClusterIP
+  selector:
+    app: service-paiement
+  ports:
+    - name: http-8086
+      port: 8086
+      targetPort: http-8086
+

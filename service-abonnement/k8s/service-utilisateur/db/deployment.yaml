@@ -1,0 +1,45 @@
+# Deploys the utilisateur PostgreSQL database for local Minikube.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-utilisateur
+  namespace: sgitu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-utilisateur
+  template:
+    metadata:
+      labels:
+        app: db-utilisateur
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef: {name: sgitu-config, key: UTILISATEUR_DB_NAME}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef: {name: sgitu-secrets, key: UTILISATEUR_DB_USER}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: sgitu-secrets, key: UTILISATEUR_DB_PASSWORD}
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "$(POSTGRES_USER)", "-d", "$(POSTGRES_DB)"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: utilisateur-db-pvc

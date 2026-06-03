@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: sgitu
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      - job_name: 'api-gateway'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['api-gateway:8080']
+
+      - job_name: 'service-abonnement'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['service-abonnement:8082']
+
+      - job_name: 'service-utilisateur'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['service-utilisateur:8083']
+
+      - job_name: 'service-paiement'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['service-paiement:8086']
+
+      - job_name: 'service-analytique'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['service-analytique:8088']

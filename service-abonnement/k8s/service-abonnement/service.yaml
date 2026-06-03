@@ -1,0 +1,15 @@
+# Exposes the abonnement service inside the SGITU namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-abonnement
+  namespace: sgitu
+spec:
+  type: ClusterIP
+  selector:
+    app: service-abonnement
+  ports:
+    - name: http-8082
+      port: 8082
+      targetPort: http-8082
+
