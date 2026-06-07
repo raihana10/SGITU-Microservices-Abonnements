@@ -379,8 +379,7 @@ services:
     networks:
       - sgitu-network
     depends_on:
-      - g4-coordination
-      - g7-service
+      - abonnement-service
       - user-service
       - g8-analytics-service
     command:
