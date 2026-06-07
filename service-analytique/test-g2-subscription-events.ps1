@@ -12,7 +12,7 @@ $g8Headers = Get-G8AuthHeaders $repoRoot
 $runId = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 $baseUrl = "http://localhost:8082"
 $topic = "abonnement.souscription"
-$userId = 1 # Utilise l'utilisateur créé via SQL
+$userId = 2 # Utilise l'utilisateur créé via SQL
 
 $envValues = Read-DotEnv (Join-Path $repoRoot ".env")
 $secret = $envValues["JWT_SECRET"]

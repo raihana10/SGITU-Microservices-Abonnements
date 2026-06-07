@@ -34,11 +34,11 @@ services:
   abonnement-service:
     # On utilise l'image construite et publiée par le pipeline CD (GitHub Actions)
     # Pour mettre à jour l'image : pousser sur main → GitHub Actions → Docker Hub
-    image: raihana10m/service-abonnement:latest
-    # build:
-    #   context: ./service-abonnement
-    #   dockerfile: Dockerfile
-    # container_name: service-abonnement
+    # image: raihana10m/service-abonnement:latest
+    build:
+      context: ./service-abonnement
+      dockerfile: Dockerfile
+    container_name: service-abonnement
     ports:
       - "8082:8082"
     depends_on:
