@@ -1,5 +1,6 @@
 package com.serviceabonnement.config;
 
+import com.serviceabonnement.security.SystemTokenProvider;
 import feign.Logger;
 import feign.RequestInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class FeignConfig {
     }
 
     @Bean
-    public RequestInterceptor requestInterceptor() {
+    public RequestInterceptor requestInterceptor(SystemTokenProvider tokenProvider) {
         return requestTemplate -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             if (attributes != null) {
@@ -25,8 +26,13 @@ public class FeignConfig {
                 String authorizationHeader = request.getHeader("Authorization");
                 if (authorizationHeader != null) {
                     requestTemplate.header("Authorization", authorizationHeader);
+                    return;
                 }
             }
+            
+            // Fallback for background tasks (Scheduler)
+            String systemToken = tokenProvider.generateSystemToken();
+            requestTemplate.header("Authorization", "Bearer " + systemToken);
         };
     }
 }

@@ -1,7 +1,6 @@
 package com.serviceabonnement.scheduler;
 
 import com.serviceabonnement.client.AnalyseClient;
-import com.serviceabonnement.dto.external.AnalyseEventDTO;
 import com.serviceabonnement.entity.AnalytiqueTrace;
 import com.serviceabonnement.repository.AnalytiqueTraceRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +36,16 @@ public class AnalytiqueScheduler {
         log.info("Tentative d'envoi d'un batch de {} traces à l'analyse", traces.size());
 
         try {
-            List<AnalyseEventDTO> dtos = traces.stream()
-                    .map(t -> AnalyseEventDTO.builder()
-                            .timestamp(t.getTimestamp())
-                            .userId(t.getUserId())
-                            .action(t.getAction())
-                            .planType(t.getPlanType())
-                            .build())
+            List<java.util.Map<String, Object>> dtos = traces.stream()
+                    .map(t -> {
+                        java.util.Map<String, Object> map = new java.util.HashMap<>();
+                        map.put("schemaVersion", 1); // Indispensable pour G8
+                        map.put("timestamp", t.getTimestamp());
+                        map.put("userId", t.getUserId());
+                        map.put("action", t.getAction());
+                        map.put("planType", t.getPlanType());
+                        return map;
+                    })
                     .collect(Collectors.toList());
 
             analyseClient.sendEvents(dtos);

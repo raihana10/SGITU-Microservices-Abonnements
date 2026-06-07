@@ -1,5 +1,7 @@
 package ma.sgitu.g8.ingestion;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ma.sgitu.g8.model.SourceType;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import java.util.Map;
 
 @Component
 public class SourceEventNormalizer {
+    private static final Logger log = LoggerFactory.getLogger(SourceEventNormalizer.class);
 
     private static final DateTimeFormatter ISO_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
@@ -100,26 +103,58 @@ public class SourceEventNormalizer {
     }
 
     private void normalizeSubscription(Map<String, Object> event) {
+        log.debug("Normalizing SUBSCRIPTION event: {}", event);
+
+        // Handle NotificationEventDTO shape (nested recipient)
+        if (event.get("recipient") instanceof Map<?, ?> recipient) {
+            Object uId = ((Map<String, Object>) recipient).get("userId");
+            if (!isBlank(uId)) {
+                event.putIfAbsent("userId", uId);
+            }
+        }
+
+        // Also check in metadata if userId is missing
+        if (isBlank(event.get("userId")) && event.get("metadata") instanceof Map<?, ?> meta) {
+            Object uId = ((Map<String, Object>) meta).get("userId");
+            if (!isBlank(uId)) {
+                event.put("userId", uId);
+            }
+        }
+
         copyFirstPresent(event, "timestamp", "createdAt", "updatedAt");
         copyFirstPresent(event, "subscriptionId", "abonnementId", "id");
         copyFirstPresent(event, "planType", "subscriptionType", "typeAbonnement", "planName");
-        normalizeTimestampValue(event, "timestamp");
+        
+        // Final fallback for userId from various sources
+        copyFirstPresent(event, "userId", "utilisateurId", "idUtilisateur");
+
+        // If timestamp is still missing, use current time
+        if (isBlank(event.get("timestamp"))) {
+            event.put("timestamp", OffsetDateTime.now(ZoneOffset.UTC).format(ISO_FORMATTER));
+        } else {
+            normalizeTimestampValue(event, "timestamp");
+        }
 
         String action = normalizedString(event.get("action"));
         String type = normalizedString(event.get("type"));
         String eventType = normalizedString(event.get("eventType"));
         String candidate = !action.isBlank() ? action : (!type.isBlank() ? type : eventType);
 
-        switch (candidate) {
-            case "SOUSCRIPTION_INITIALE", "SUBSCRIPTION_CREATED", "CREATED" -> event.put("action", "created");
-            case "RENOUVELLEMENT", "SUBSCRIPTION_RENEWED", "RENEWED" -> event.put("action", "renewed");
-            case "ANNULATION_CONFIRMEE", "SUBSCRIPTION_CANCELLED", "CANCELLED" -> event.put("action", "cancelled");
+        switch (candidate.toUpperCase(Locale.ROOT)) {
+            case "SOUSCRIPTION_INITIALE", "SUBSCRIPTION_CREATED", "CREATED", "CONFIRMATION_SOUSCRIPTION", "ECHEC_SOUSCRIPTION" -> event.put("action", "created");
+            case "RENOUVELLEMENT", "SUBSCRIPTION_RENEWED", "RENEWED", "RENOUVELLEMENT_EFFECTUE" -> event.put("action", "renewed");
+            case "ANNULATION_CONFIRMEE", "SUBSCRIPTION_CANCELLED", "CANCELLED", "ANNULATION_EFFECTUEE" -> event.put("action", "cancelled");
             default -> {
                 if (!action.isBlank()) {
                     event.put("action", action.toLowerCase(Locale.ROOT));
+                } else if (!eventType.isBlank()) {
+                    // Fallback to a simplified version of the event type if action is still unknown
+                    event.put("action", eventType.toLowerCase(Locale.ROOT).replace("confirmation_", "").replace("_effectuee", ""));
                 }
             }
         }
+        
+        log.debug("Normalized SUBSCRIPTION event result: {}", event);
     }
 
     private void normalizeUser(Map<String, Object> event) {

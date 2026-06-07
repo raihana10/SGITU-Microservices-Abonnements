@@ -12,7 +12,7 @@ $g8Headers = Get-G8AuthHeaders $repoRoot
 $runId = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 $baseUrl = "http://localhost:8082"
 $topic = "abonnement.souscription"
-$userId = [int](900000 + ($runId % 100000))
+$userId = 1 # Utilise l'utilisateur créé via SQL
 
 $envValues = Read-DotEnv (Join-Path $repoRoot ".env")
 $secret = $envValues["JWT_SECRET"]
@@ -30,11 +30,13 @@ $checks = [ordered]@{
     "g8-analytics-service" = "G8 Analytics"
     "db-abonnement" = "Subscription MySQL"
     "service-abonnement" = "Subscription service"
+    "g3-user-service" = "User service"
 }
 foreach ($container in $checks.Keys) {
     Add-Result "$($checks[$container]) container is ready" (Wait-ContainerHealthy -ContainerName $container -Timeout $TimeoutSeconds) $container
 }
 Add-Result "G8 health endpoint is reachable" (Wait-HttpOk -Url "http://localhost:8088/actuator/health" -Timeout $TimeoutSeconds)
+
 
 Write-Step "Trigger a real subscription action"
 $subscriptionId = $null

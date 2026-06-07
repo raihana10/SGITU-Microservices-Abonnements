@@ -78,8 +78,12 @@ public class AbonnementServiceImpl implements AbonnementService {
         UserDTO user;
         try {
             user = userClient.getUserById(userId);
+            if (user != null) {
+                log.info("✅ Relation G3 OK : Profil trouvé pour l'utilisateur {} (Email: {})", userId, user.getEmail());
+                email = user.getEmail();
+            }
         } catch (Exception e) {
-            log.warn("Impossible de vérifier l'utilisateur {} via G3: {}", userId, e.getMessage());
+            log.warn("⚠️ G3 injoignable pour l'utilisateur {} : {}. Utilisation du fallback.", userId, e.getMessage());
             user = null;
         }
 
@@ -848,6 +852,9 @@ public class AbonnementServiceImpl implements AbonnementService {
     }
 
     private boolean isEligibleForPlan(List<String> userRoles, String planCategory) {
+        if(userRoles.contains("ROLE_ADMIN_G2")) {
+            return true;
+        }
         return userRoles.stream()
             .anyMatch(role -> role.equalsIgnoreCase(planCategory));
     }

@@ -1,7 +1,8 @@
 package ma.sgitu.g8.kafka;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ma.sgitu.g8.ingestion.IngestionService;
 import ma.sgitu.g8.model.SourceType;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KafkaIngestionConsumer {
+    private static final Logger log = LoggerFactory.getLogger(KafkaIngestionConsumer.class);
 
     private final IngestionService ingestionService;
 
@@ -80,11 +81,14 @@ public class KafkaIngestionConsumer {
         try {
             var normalizedEvents = withSchemaVersion(events);
             var result = ingestionService.ingest(normalizedEvents, sourceType);
+            if (!"SUCCESS".equals(result.getStatus())) {
+                log.warn("Kafka [{}] — partial/rejected: {}", sourceType, result.getRejectedReasons());
+            }
             log.info("Kafka [{}] — accepted={} rejected={} status={}",
                     sourceType, result.getTotalAccepted(), result.getTotalRejected(), result.getStatus());
             ack.acknowledge();
         } catch (Exception ex) {
-            log.error("Kafka [{}] — failed to process batch, will not acknowledge", sourceType, ex);
+            log.error("Kafka [{}] — failed to process batch, will not acknowledge: {}", sourceType, ex.getMessage(), ex);
         }
     }
 

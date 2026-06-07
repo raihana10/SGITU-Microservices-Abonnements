@@ -32,6 +32,9 @@ public class SubscriptionEventPublisher {
     // --- 1. CONFIRMATION_SOUSCRIPTION ---
     public void publishConfirmationSouscription(UserDTO user, Abonnement abonnement) {
         Map<String, Object> metadata = new HashMap<>();
+        metadata.put("userId", user.getId());
+        metadata.put("subscriptionId", abonnement.getId());
+        metadata.put("planType", abonnement.getPlan().getNomPlan());
         metadata.put("planNom", abonnement.getPlan().getNomPlan());
         metadata.put("categorie", abonnement.getPlan().getCategorie());
         metadata.put("dateDebut", abonnement.getDateDebut());

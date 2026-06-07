@@ -3,13 +3,14 @@ package com.serviceabonnement.client;
 import com.serviceabonnement.dto.external.PaymentRequestDTO;
 import com.serviceabonnement.dto.external.PaymentResponseDTO;
 import com.serviceabonnement.dto.external.RefundRequestDTO;
+import com.serviceabonnement.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "service-paiement", url = "${application.config.paiement-service-url}")
+@FeignClient(name = "service-paiement", url = "${application.config.paiement-service-url}", configuration = FeignConfig.class)
 public interface PaiementClient {
 
     @PostMapping("/api/v1/payments/process")
